@@ -93,13 +93,15 @@ describe("app option", () => {
             expect(HTTPVersion).toEqual("http/1.1");
           }
 
-          expect(response.status()).toMatchSnapshotWithArray();
-          expect(await response.text()).toMatchSnapshotWithArray();
+          expect(response.status()).toBe(200);
+          await expect(page).toHaveScreenshot();
           expect(
-            consoleMessages.map((message) => message.text()))
-          .toMatchSnapshotWithArray();
-          expect(pageErrors).toMatchSnapshotWithArray();
-        });
+            [
+              ...consoleMessages.map((message) => message.text()),
+              ...pageErrors,
+            ]
+          ).toMatchSnapshotWithArray();        
+        });      
       });
     }
   }
